@@ -126,6 +126,8 @@ FLAVORS = {
 
 # os_version, suffix, extras
 PLATFORMS = {
+    'fedora27': ('fedora-27', 'f27', []),
+    'fedora26': ('fedora-26', 'f26', []),
     'fedora25': ('fedora-25', 'f25', []),
     'centos73': ('centos-7.3', 'centos73', [
         '--install', 'epel-release',
