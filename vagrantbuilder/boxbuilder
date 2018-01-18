@@ -359,7 +359,7 @@ def main():
         virt_update_base(args)
 
     print("Copy {0.baseimage} to {0.boxworkfile}".format(args))
-    # shutil.copyfile(args.baseimage, args.boxworkfile)
+    shutil.copyfile(args.baseimage, args.boxworkfile)
 
     print("Customize with extra packages and updates")
     virt_customize(args)
