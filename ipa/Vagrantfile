@@ -7,6 +7,7 @@ DOMAIN="ipa.example"
 INSTALL_IDP = true
 INSTALL_VPN = false
 INSTALL_BASIC_ONLY = false
+FLEET_COMMANDER = false
 
 HERE = File.dirname(__FILE__)
 ENV['ANSIBLE_CONFIG'] = "#{HERE}/../ansible/ansible.cfg"
@@ -19,8 +20,12 @@ if ENV.has_key?('SSH_AUTH_SOCK')
 end
 
 Vagrant.configure(2) do |config|
-    config.vm.box = "cheimes/freeipa-f25"
-    # config.vm.box = "cheimes/freeipa-centos73"
+    if FLEET_COMMANDER
+        config.vm.box = "fidencio/fleet-commander-f27"
+    else
+        config.vm.box = "cheimes/freeipa-f25"
+        # config.vm.box = "cheimes/freeipa-centos73"
+    end
 
     # no rsync, Ansible playbook syncs files manually
     config.vm.synced_folder ".", "/vagrant", disabled: true
@@ -31,11 +36,18 @@ Vagrant.configure(2) do |config|
         config.hostmanager.manage_guest = false
     end
 
-    # 386 MB is enough for VPN, NFS and client
     config.vm.provider :libvirt do |domain|
-        domain.memory = 384
-	# see https://bugzilla.redhat.com/show_bug.cgi?id=1283989
-	domain.cpu_mode = 'host-passthrough'
+        if FLEET_COMMANDER
+            domain.memory = 1536
+            domain.cpus = 2
+            domain.graphics_type = 'spice'
+            domain.video_type = 'qxl'
+        else
+            # 386 MB is enough for VPN, NFS and client
+            domain.memory = 386
+            # see https://bugzilla.redhat.com/show_bug.cgi?id=1283989
+        end
+        domain.cpu_mode = 'host-passthrough'
     end
 
     config.vm.define "ipaclient1" do |host|
@@ -74,9 +86,11 @@ Vagrant.configure(2) do |config|
     # execution. It makes the output more readable, too.
     config.vm.define "ipamaster" do |host|
         host.vm.hostname = "master.#{DOMAIN}"
-        host.vm.provider :libvirt do |domain|
-            domain.memory = 1536
-            domain.cpus = 2
+        if not FLEET_COMMANDER
+            host.vm.provider :libvirt do |domain|
+                domain.memory = 1536
+                domain.cpus = 2
+            end
         end
 
         host.vm.provision "ansible" do |ansible|
