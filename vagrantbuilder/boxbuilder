@@ -61,12 +61,23 @@ IPA_PACKAGES = [
     'ipa-client', 'ipa-server', 'ipa-server-dns', 'ipa-server-trust-ad'
 ]
 
+FLEET_COMMANDER_PACKAGES = [
+    '@workstation-product-environment',
+    'freeipa-desktop-profile', 'fleet-commander-admin',
+    'fleet-commander-client', 'fleet-commander-logger'
+]
+
 # package names
 BASE_PKG_NAMES = ','.join(sorted(BASE_PACKAGES))
 DOGTAG_PKG_NAMES = ','.join(sorted(BASE_PACKAGES + DOGTAG_PACKAGES))
 FREEIPA_PKG_NAMES = ','.join(sorted(
     BASE_PACKAGES + DOGTAG_PACKAGES + HTTPD_PACKAGES + IPSILON_PACKAGES +
     SAMBA_PACKAGES + OCSERV_PACKAGES + NFS_PACKAGES + IPA_PACKAGES))
+FLEET_COMMANDER_PKG_NAMES = ','.join(sorted(
+    BASE_PACKAGES + DOGTAG_PACKAGES + HTTPD_PACKAGES + IPSILON_PACKAGES +
+    SAMBA_PACKAGES + OCSERV_PACKAGES + NFS_PACKAGES + IPA_PACKAGES +
+    FLEET_COMMANDER_PACKAGES))
+
 
 # add package infos to json metadata
 PACKAGE_METADATA = [
@@ -109,6 +120,13 @@ end
 """
 
 FLAVORS = {
+    'fleet-commander': [
+        '--install', FLEET_COMMANDER_PKG_NAMES,
+        '--run-command', 'systemctl enable gdm.service',
+        '--run-command', 'systemctl enable cockpit.socket',
+        '--run-command', 'systemctl set-default graphical.target',
+        '--firstboot', 'scripts/ipa-firstboot',
+    ],
     'freeipa': [
         '--install', FREEIPA_PKG_NAMES,
         '--firstboot', 'scripts/ipa-firstboot',
@@ -172,6 +190,8 @@ def virt_builder(args):
     """
     cmd = ['virt-builder']
     cmd.extend(VIRT_ARGS)
+    if args.flavor == "fleet-commander":
+        cmd.extend(['--size', '12G'])
     cmd.extend(['--install', BASE_PKG_NAMES])
     cmd.extend([args.os_version, '--output', args.baseimage])
     subprocess.check_call(cmd)
