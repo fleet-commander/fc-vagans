@@ -64,7 +64,7 @@ IPA_PACKAGES = [
 # package names
 BASE_PKG_NAMES = ','.join(sorted(BASE_PACKAGES))
 DOGTAG_PKG_NAMES = ','.join(sorted(BASE_PACKAGES + DOGTAG_PACKAGES))
-FREEIPA_PGK_NAMES = ','.join(sorted(
+FREEIPA_PKG_NAMES = ','.join(sorted(
     BASE_PACKAGES + DOGTAG_PACKAGES + HTTPD_PACKAGES + IPSILON_PACKAGES +
     SAMBA_PACKAGES + OCSERV_PACKAGES + NFS_PACKAGES + IPA_PACKAGES))
 
@@ -110,7 +110,7 @@ end
 
 FLAVORS = {
     'freeipa': [
-        '--install', FREEIPA_PGK_NAMES,
+        '--install', FREEIPA_PKG_NAMES,
         '--firstboot', 'scripts/ipa-firstboot',
     ],
     # 'freeipa44-copr': [
