@@ -1,5 +1,5 @@
 
-playbook: ansible/ipa-playbook.yml
+playbook: ansible/fleet-commander-playbook.yml
 
   play #1 (all): safe-guard against race condition	TAGS: []
       TASK TAGS: [bootstrap]
