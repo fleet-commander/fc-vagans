@@ -4,10 +4,6 @@
 Vagrant.require_version ">= 1.6.0"
 
 DOMAIN="ipa.example"
-INSTALL_IDP = false
-INSTALL_VPN = false
-INSTALL_BASIC_ONLY = true
-FLEET_COMMANDER = true
 
 HERE = File.dirname(__FILE__)
 ENV['ANSIBLE_CONFIG'] = "#{HERE}/../ansible/ansible.cfg"
@@ -20,13 +16,7 @@ if ENV.has_key?('SSH_AUTH_SOCK')
 end
 
 Vagrant.configure(2) do |config|
-    if FLEET_COMMANDER
-        config.vm.box = "fidencio/fleet-commander-f27"
-    else
-        config.vm.box = "cheimes/freeipa-f25"
-        # config.vm.box = "cheimes/freeipa-centos73"
-    end
-
+    config.vm.box = "fidencio/fleet-commander-f27"
     # no rsync, Ansible playbook syncs files manually
     config.vm.synced_folder ".", "/vagrant", disabled: true
 
@@ -37,16 +27,10 @@ Vagrant.configure(2) do |config|
     end
 
     config.vm.provider :libvirt do |domain|
-        if FLEET_COMMANDER
-            domain.memory = 1536
-            domain.cpus = 2
-            domain.graphics_type = 'spice'
-            domain.video_type = 'qxl'
-        else
-            # 386 MB is enough for VPN, NFS and client
-            domain.memory = 386
-            # see https://bugzilla.redhat.com/show_bug.cgi?id=1283989
-        end
+        domain.memory = 1536
+        domain.cpus = 2
+        domain.graphics_type = 'spice'
+        domain.video_type = 'qxl'
         domain.cpu_mode = 'host-passthrough'
     end
 
@@ -54,45 +38,11 @@ Vagrant.configure(2) do |config|
         host.vm.hostname = "client1.#{DOMAIN}"
     end
 
-    if not INSTALL_BASIC_ONLY
-        config.vm.define "ipafileserver" do |host|
-            host.vm.hostname = "fileserver.#{DOMAIN}"
-        end
-    end
-
-    if INSTALL_IDP
-        config.vm.define "ipaidpserver" do |host|
-            host.vm.hostname = "idp.#{DOMAIN}"
-        end
-    end
-
-    if INSTALL_VPN
-        config.vm.define "ipavpnserver" do |host|
-            host.vm.hostname = "vpn.#{DOMAIN}"
-        end
-    end
-
-    if not INSTALL_BASIC_ONLY
-        config.vm.define "ipareplica1" do |host|
-            host.vm.hostname = "replica1.#{DOMAIN}"
-            host.vm.provider :libvirt do |domain|
-                domain.memory = 1536
-            end
-        end
-    end
-
     # Vagrant's parallized Ansible is just too fragile. Use one instance
     # of Ansible with limit=all and let Ansible take care of parallel
     # execution. It makes the output more readable, too.
     config.vm.define "ipamaster" do |host|
         host.vm.hostname = "master.#{DOMAIN}"
-        if not FLEET_COMMANDER
-            host.vm.provider :libvirt do |domain|
-                domain.memory = 1536
-                domain.cpus = 2
-            end
-        end
-
         host.vm.provision "ansible" do |ansible|
             ansible.limit = "all"
             ansible.playbook = "../ansible/ipa-playbook.yml"
@@ -100,26 +50,6 @@ Vagrant.configure(2) do |config|
                 "ipaserver_master" => ["ipamaster"],
                 "ipa_client" => ["ipaclient1"],
             }
-            if INSTALL_IDP
-                ansible.groups.update({
-                    "ipa_ipsilon_idp" => ["ipaidpserver"],
-                    "ipa_sp_example" => ["ipafileserver"],
-                })
-            end
-            if INSTALL_VPN
-                ansible.groups.update({
-                    "ipa_vpnserver" => ["ipavpnserver"],
-                })
-            end
-            if not INSTALL_BASIC_ONLY
-                ansible.groups.update({
-                    "ipaserver_replica" => ["ipareplica1"],
-                    "ipa_nfsserver" => ["ipafileserver"],
-                    "ipa_smbserver" => ["ipafileserver"],
-                    "ipa_httpexample" => ["ipafileserver"],
-                    "ipa_nfsclient" => ["ipamaster", "ipareplica1", "ipaclient1"],
-                })
-            end
 
             ansible.verbose = 'vv'
             # network: Don't use network (no DNS forwarder, no package installations)
@@ -137,9 +67,7 @@ Vagrant.configure(2) do |config|
                 "package_install" => false,
                 "package_upgrade" => false,
                 "custom_rpms" => false,
-                "coprs_enabled" => [
-                    # "@freeipa/freeipa-master",
-                ],
+                "coprs_enabled" => [],
             }
         end
     end
