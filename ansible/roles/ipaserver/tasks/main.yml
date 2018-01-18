@@ -40,4 +40,5 @@
     - freeipa-ldap
     - freeipa-ldaps
     - dns
+    - cockpit
   when: has_firewalld.stat.exists
