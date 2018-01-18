@@ -21,68 +21,39 @@ BASE_PACKAGES = [
     'gnupg', 'libselinux-python', 'python-firewall', 'python2', 'python2-dnf',
     'sudo',
     # extras
-    'java-headless', 'openssh-clients', 'openssl', 'psmisc', 'rng-tools',
+    'openssh-clients', 'openssl', 'psmisc', 'rng-tools',
     'screen', 'tar', 'tmux', 'vim-enhanced',
-]
-
-DOGTAG_PACKAGES = [
-    '389-ds-base',
-    'pki-ca', 'pki-kra', 'pki-ocsp', 'pki-server', 'dogtag-pki-server-theme',
-]
-
-HTTPD_PACKAGES = [
-    'httpd', 'mod_auth_gssapi', 'mod_authnz_pam',
-    'mod_intercept_form_submit', 'mod_lookup_identity', 'libsss_simpleifp',
-    'sssd-dbus', 'mod_nss', 'mod_session', 'mod_wsgi'
-]
-
-IPSILON_PACKAGES = [
-    'ipsilon', 'ipsilon-client', 'ipsilon-saml2', 'ipsilon-openid',
-    'ipsilon-openidc', 'ipsilon-persona', 'ipsilon-authform',
-    'ipsilon-infosssd', 'ipsilon-tools-ipa', 'ipsilon-authgssapi',
-    'ipsilon-authfas', 'ipsilon-authpam'
-]
-
-SAMBA_PACKAGES = [
-    'samba', 'samba-client', 'sssd-libwbclient'
-]
-
-OCSERV_PACKAGES = [
-    'ocserv', 'openconnect', 'bridge-utils'
-]
-
-NFS_PACKAGES = [
-    'nfs-utils'
 ]
 
 # On Fedora the canonical package names start with freeipa but have an
 # alternative name, too.
 IPA_PACKAGES = [
-    'ipa-client', 'ipa-server', 'ipa-server-dns', 'ipa-server-trust-ad'
+    'ipa-client', 'ipa-server'
+]
+
+IPA_PLUGIN_PACKAGES = [
+    'freeipa-desktop-profile'
+]
+
+FEDORA_WORKSTATION_PACKAGES = [
+    '@workstation-product-environment'
 ]
 
 FLEET_COMMANDER_PACKAGES = [
-    '@workstation-product-environment',
-    'freeipa-desktop-profile', 'fleet-commander-admin',
-    'fleet-commander-client', 'fleet-commander-logger'
+    'fleet-commander-admin', 'fleet-commander-client',
+    'fleet-commander-logger'
 ]
 
 # package names
 BASE_PKG_NAMES = ','.join(sorted(BASE_PACKAGES))
-DOGTAG_PKG_NAMES = ','.join(sorted(BASE_PACKAGES + DOGTAG_PACKAGES))
-FREEIPA_PKG_NAMES = ','.join(sorted(
-    BASE_PACKAGES + DOGTAG_PACKAGES + HTTPD_PACKAGES + IPSILON_PACKAGES +
-    SAMBA_PACKAGES + OCSERV_PACKAGES + NFS_PACKAGES + IPA_PACKAGES))
 FLEET_COMMANDER_PKG_NAMES = ','.join(sorted(
-    BASE_PACKAGES + DOGTAG_PACKAGES + HTTPD_PACKAGES + IPSILON_PACKAGES +
-    SAMBA_PACKAGES + OCSERV_PACKAGES + NFS_PACKAGES + IPA_PACKAGES +
+    BASE_PACKAGES + IPA_PACKAGES + FEDORA_WORKSTATION_PACKAGES +
     FLEET_COMMANDER_PACKAGES))
 
 
 # add package infos to json metadata
 PACKAGE_METADATA = [
-    '389-ds-base', 'pki-server', 'freeipa-server', 'ipa-server',
-    'ipsilon'
+    'freeipa-server', 'ipa-server'
 ]
 
 # remove old kernels
@@ -127,31 +98,12 @@ FLAVORS = {
         '--run-command', 'systemctl set-default graphical.target',
         '--firstboot', 'scripts/ipa-firstboot',
     ],
-    'freeipa': [
-        '--install', FREEIPA_PKG_NAMES,
-        '--firstboot', 'scripts/ipa-firstboot',
-    ],
-    # 'freeipa44-copr': [
-    #     # FreeIPA 4.4 for Fedora 24
-    #     '--run-command', COPR_ENABLE.format('@freeipa/freeipa-4-4'),
-    #     '--install', FREEIPA_PGK_NAMES,
-    #     '--firstboot', 'scripts/ipa-firstboot',
-    # ],
-    'dogtag': [
-        '--install', DOGTAG_PKG_NAMES
-    ],
 }
 
 # os_version, suffix, extras
 PLATFORMS = {
     'fedora27': ('fedora-27', 'f27', []),
     'fedora26': ('fedora-26', 'f26', []),
-    'fedora25': ('fedora-25', 'f25', []),
-    'centos73': ('centos-7.3', 'centos73', [
-        '--install', 'epel-release',
-        '--copy-in', 'scripts/puiterwijk-ipsilon-epel-7.repo:/etc/yum.repos.d/',
-    ]),
-    # 'rhel73': ('rhel-7.3', 'rhel73', []),
 }
 
 
@@ -190,8 +142,7 @@ def virt_builder(args):
     """
     cmd = ['virt-builder']
     cmd.extend(VIRT_ARGS)
-    if args.flavor == "fleet-commander":
-        cmd.extend(['--size', '12G'])
+    cmd.extend(['--size', '12G'])
     cmd.extend(['--install', BASE_PKG_NAMES])
     cmd.extend([args.os_version, '--output', args.baseimage])
     subprocess.check_call(cmd)
