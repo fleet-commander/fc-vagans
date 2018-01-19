@@ -59,6 +59,8 @@ playbook: ansible/fleet-commander-playbook.yml
       ipa : install FreeIPA client package (RHEL / CentOS)	TAGS: [ipa, network, package-install]
       ipa : Check for mod_ssl configuration	TAGS: [ipa]
       ipa : Disable mod_ssl configuration	TAGS: [ipa]
+      ipa : Check for ipa-otpd file for following workaround	TAGS: [ipa]
+      ipa : Workaround for ipa-otpd SELinux context	TAGS: [ipa]
       ipa : Gather IPA facts	TAGS: [ipa]
 
   play #3 (ipaserver_master): install IPA server system	TAGS: []
