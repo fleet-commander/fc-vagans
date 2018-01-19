@@ -48,7 +48,6 @@
   hosts:
    - ipa_client
    - ipa_nfsserver
-   - ipa_smbserver
    - ipa_vpnserver
   roles:
     - ipa-client
@@ -66,9 +65,3 @@
     - ipa_nfsserver
   roles:
     - ipa-nfsserver
-
-- name: install FreeIPA Samba server
-  hosts:
-    - ipa_smbserver
-  roles:
-    - ipa-smbserver
