@@ -20,7 +20,7 @@
     - bootstrap
   raw: "which dnf 2>/dev/null"
   register: which_dnf
-  failed_when: "{{ which_dnf.rc > 1 }}"
+  failed_when: "which_dnf.rc > 1"
   changed_when: false
 
 - name: Install python2 and deps for ansible modules

@@ -47,7 +47,7 @@
   with_items:
    - ipa-client
    - ipa-admintools
-  when: "{{ ansible_distribution in ['RedHat', 'CentOS'] and package_install }}"
+  when: "ansible_distribution in ['RedHat', 'CentOS'] and package_install"
 
 - name: Check for mod_ssl configuration
   tags:
