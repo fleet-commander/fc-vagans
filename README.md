@@ -124,7 +124,7 @@ General bootstrapping tasks to set up networking and Ansible dependecies (Python
 common
 ------
 
-Common tasks for FreeIPA and Dogtag:
+Common tasks for FreeIPA:
 
  * firewalld
  * SELinux
