@@ -122,26 +122,6 @@
     ignore_no_modifications=true
     ignore_already_exists=true
 
-- name: Set home directory to /export/home
-  tags:
-    - ipaserver-master
-    - ipa-install
-  ipa:
-    args="config-mod --homedirectory=/export/home"
-    password="{{ ipa_admin_password }}"
-    ignore_no_modifications=true
-  when: install_ipa_nfsserver
-
-- name: Set admin's home directory to /export/home/admin
-  tags:
-    - ipaserver-master
-    - ipa-install
-  ipa:
-    args="user-mod admin --homedir=/export/home/admin"
-    password="{{ ipa_admin_password }}"
-    ignore_no_modifications=true
-  when: install_ipa_nfsserver
-
 - name: Enable password and OTP loging
   tags:
     - ipaserver-master

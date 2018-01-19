@@ -81,8 +81,6 @@ playbook: ansible/fleet-commander-playbook.yml
       ipaserver-master : Use FreeIPA DNS, nmcli conn modify ipv4.ignore-auto-dns	TAGS: [ipa-install, ipaserver-master]
       ipaserver-master : Restart NetworkManager to make DNS changes effective	TAGS: [ipa-install, ipaserver-master]
       ipaserver-master : Set sensible defaults	TAGS: [ipa-install, ipaserver-master]
-      ipaserver-master : Set home directory to /export/home	TAGS: [ipa-install, ipaserver-master]
-      ipaserver-master : Set admin's home directory to /export/home/admin	TAGS: [ipa-install, ipaserver-master]
       ipaserver-master : Enable password and OTP loging	TAGS: [ipa-install, ipaserver-master]
       ipaserver-master : Enable global DNS sync ptr	TAGS: [ipa-install, ipaserver-master]
       ipaserver-master : Enable DNS sync ptr	TAGS: [ipa-install, ipaserver-master]
@@ -113,7 +111,6 @@ playbook: ansible/fleet-commander-playbook.yml
 
   play #6 (ipaserver_replica): install FreeIPA server replica	TAGS: []
     tasks:
-      ipaserver-replica : Create /export home directory with correct context	TAGS: [ipa-client, ipa-install]
       ipaserver-replica : join FreeIPA	TAGS: [ipa-client, ipa-install]
       ipaserver-replica : Update IPA facts	TAGS: [ipa-client]
       ipaserver-replica : install replica	TAGS: [ipa-install, ipaserver-replica]
@@ -129,7 +126,6 @@ playbook: ansible/fleet-commander-playbook.yml
 
   play #7 (ipa_client,ipa_nfsserver,ipa_vpnserver): install FreeIPA client	TAGS: []
     tasks:
-      ipa-client : Create /export home directory with correct context	TAGS: [ipa-client, ipa-install]
       ipa-client : join FreeIPA	TAGS: [ipa-client, ipa-install]
       ipa-client : Update IPA facts	TAGS: [ipa-client]
 
@@ -152,22 +148,3 @@ playbook: ansible/fleet-commander-playbook.yml
       ipa-vpnserver : Template local scripts	TAGS: [ipa-install, ipa-vpnserver]
       ipa-vpnserver : Template local inventory files	TAGS: [ipa-install, ipa-vpnserver]
       ipa-vpnserver : Write custom krb5.conf	TAGS: [fetch, ipa-install, ipa-vpnserver]
-
-  play #9 (ipa_nfsserver): install FreeIPA NFS server	TAGS: []
-    tasks:
-      ipa-nfsserver : install nfs-utils	TAGS: [ipa-nfsserver, network, package-install]
-      ipa-nfsserver : Open Firewall for NFS	TAGS: [firewall, ipa-nfsserver]
-      ipa-nfsserver : Get keytab content	TAGS: [ipa-install, ipa-nfsserver]
-      ipa-nfsserver : Create NFS service	TAGS: [ipa-install, ipa-nfsserver]
-      ipa-nfsserver : Add NFS service to keytab	TAGS: [ipa-install, ipa-nfsserver]
-      ipa-nfsserver : Create /exports/home	TAGS: [ipa-install, ipa-nfsserver]
-      ipa-nfsserver : Add NFS export	TAGS: [ipa-install, ipa-nfsserver]
-      ipa-nfsserver : Enable NFS server	TAGS: [ipa-install, ipa-nfsserver]
-      ipa-nfsserver : look for auto.home in default location	TAGS: [ipa-install, ipa-nfsserver]
-      ipa-nfsserver : Set has_auto_home fact	TAGS: [ipa-install, ipa-nfsserver]
-      ipa-nfsserver : add automount default location	TAGS: [ipa-install, ipa-nfsserver]
-      ipa-nfsserver : add auto.home map	TAGS: [ipa-install, ipa-nfsserver]
-      ipa-nfsserver : add auto.home to auto.master	TAGS: [ipa-install, ipa-nfsserver]
-      ipa-nfsserver : automountkey-add default auto.home	TAGS: [ipa-install, ipa-nfsserver]
-      ipa-nfsserver : Get FreeIPA users	TAGS: [ipa-install, ipa-nfs-homedirs, ipa-nfsserver]
-      ipa-nfsserver : Create home directory for FreeIPA users	TAGS: [ipa-install, ipa-nfs-homedirs, ipa-nfsserver]

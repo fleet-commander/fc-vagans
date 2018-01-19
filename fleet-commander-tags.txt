@@ -19,11 +19,8 @@ playbook: ansible/fleet-commander-playbook.yml
   play #6 (ipaserver_replica): install FreeIPA server replica	TAGS: []
       TASK TAGS: [fetch, ipa-client, ipa-install, ipaserver-replica]
 
-  play #7 (ipa_client,ipa_nfsserver,ipa_vpnserver): install FreeIPA client	TAGS: []
+  play #7 (ipa_client,ipa_vpnserver): install FreeIPA client	TAGS: []
       TASK TAGS: [ipa-client, ipa-install]
 
   play #8 (ipa_vpnserver): install OpenConnect VPN server for FreeIPA	TAGS: []
       TASK TAGS: [fetch, firewall, ipa-install, ipa-vpnserver, network, package-install]
-
-  play #9 (ipa_nfsserver): install FreeIPA NFS server	TAGS: []
-      TASK TAGS: [firewall, ipa-install, ipa-nfs-homedirs, ipa-nfsserver, network, package-install]

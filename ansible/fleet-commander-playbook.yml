@@ -47,7 +47,6 @@
   any_errors_fatal: true
   hosts:
    - ipa_client
-   - ipa_nfsserver
    - ipa_vpnserver
   roles:
     - ipa-client
@@ -59,9 +58,3 @@
     - ipa_vpnserver
   roles:
     - ipa-vpnserver
-
-- name: install FreeIPA NFS server
-  hosts:
-    - ipa_nfsserver
-  roles:
-    - ipa-nfsserver
