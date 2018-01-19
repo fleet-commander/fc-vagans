@@ -80,9 +80,3 @@
     - ipa_httpexample
   roles:
     - ipa-httpexample
-
-- name: install Ipsilon Identity Provider
-  hosts:
-    - ipa_ipsilon_idp
-  roles:
-    - ipa-ipsilon-idp
