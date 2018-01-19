@@ -1,6 +1,0 @@
----
-- name: restart ocserv
-  service: name=ocserv state=restarted
-
-- name: permanent masquerade
-  command: firewall-cmd --permanent --add-masquerade

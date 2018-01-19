@@ -124,27 +124,7 @@ playbook: ansible/fleet-commander-playbook.yml
       ipaserver-replica : Make sure named-pkcs11 DNS is restarted	TAGS: [ipa-install, ipaserver-replica]
       ipaserver-replica : Update IPA facts	TAGS: [ipaserver-replica]
 
-  play #7 (ipa_client,ipa_nfsserver,ipa_vpnserver): install FreeIPA client	TAGS: []
+  play #7 (ipa_client): install FreeIPA client	TAGS: []
     tasks:
       ipa-client : join FreeIPA	TAGS: [ipa-client, ipa-install]
       ipa-client : Update IPA facts	TAGS: [ipa-client]
-
-  play #8 (ipa_vpnserver): install OpenConnect VPN server for FreeIPA	TAGS: []
-    tasks:
-      ipa-vpnserver : install ocserv VPN server	TAGS: [ipa-vpnserver, network, package-install]
-      ipa-vpnserver : Open Firewall services for ocserv VPN server	TAGS: [firewall, ipa-vpnserver]
-      ipa-vpnserver : Open Firewall DTLS UDP port for ocserv VPN server	TAGS: [firewall, ipa-vpnserver]
-      ipa-vpnserver : Enable IPv4 proxy_arp	TAGS: [ipa-install, ipa-vpnserver]
-      ipa-vpnserver : Enable masquerading	TAGS: [ipa-install, ipa-vpnserver]
-      ipa-vpnserver : Get keytab /etc/ocserv/key.tab content	TAGS: [ipa-install, ipa-vpnserver]
-      ipa-vpnserver : Create VPN service	TAGS: [ipa-install, ipa-vpnserver]
-      ipa-vpnserver : Add VPN service to keytab /etc/ocserv/key.tab	TAGS: [ipa-install, ipa-vpnserver]
-      ipa-vpnserver : Look for /etc/pki/ocserv/public/server.crt	TAGS: [ipa-install, ipa-vpnserver]
-      ipa-vpnserver : Request certificate /etc/pki/ocserv/public/server.crt with ipa-getcert	TAGS: [ipa-install, ipa-vpnserver]
-      ipa-vpnserver : Wait for certmonger	TAGS: [ipa-install, ipa-vpnserver]
-      ipa-vpnserver : Create a link from /etc/pki/ocserv/cacerts/ca.crt to /etc/ipa/ca.crt	TAGS: [ipa-install, ipa-vpnserver]
-      ipa-vpnserver : Write ocserv.conf	TAGS: [ipa-install, ipa-vpnserver]
-      ipa-vpnserver : Enable ocserv	TAGS: [ipa-install, ipa-vpnserver]
-      ipa-vpnserver : Template local scripts	TAGS: [ipa-install, ipa-vpnserver]
-      ipa-vpnserver : Template local inventory files	TAGS: [ipa-install, ipa-vpnserver]
-      ipa-vpnserver : Write custom krb5.conf	TAGS: [fetch, ipa-install, ipa-vpnserver]

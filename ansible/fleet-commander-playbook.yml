@@ -47,14 +47,7 @@
   any_errors_fatal: true
   hosts:
    - ipa_client
-   - ipa_vpnserver
   roles:
     - ipa-client
   # workaround for join race-condition in 4.3.0
   serial: 1
-
-- name: install OpenConnect VPN server for FreeIPA
-  hosts:
-    - ipa_vpnserver
-  roles:
-    - ipa-vpnserver

@@ -40,7 +40,6 @@
     - xulstore.json
   run_once: true
 
-# ipa-vpnserver creates another krb5 config for KKDCP
 - name: Write custom krb5.conf
   tags:
     - ipa-inventory
@@ -118,9 +117,6 @@
     - ipa_kinit
     - ipa_kkdcp_kinit
     - ipa_ssh
-    # Handled by ipa-vpnserver
-    # - ipa_kkdcp_openconnect_kinit
-    # - ipa_kkdcp_openconnect_vpn
   run_once: true
 
 - name: Template local inventory files
@@ -137,8 +133,6 @@
     - ipa_ssh_config
     - ipaenv
     - ipaenv_kkdcp
-    # Handled by ipa-vpnserver
-    # - ipaenv_kkdcp_openconnect
   run_once: true
 
 - name: Check for NSSDB
