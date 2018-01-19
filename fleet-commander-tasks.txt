@@ -70,9 +70,7 @@ playbook: ansible/fleet-commander-playbook.yml
   play #4 (ipaserver_master): install FreeIPA server master	TAGS: []
     tasks:
       ipaserver-master : Install FreeIPA master (5-7 minutes)	TAGS: [ipa-install, ipaserver-master]
-      ipaserver-master : Install KRA on FreeIPA master (2-3 minutes)	TAGS: [ipa-install, ipaserver-master]
       ipaserver-master : Update IPA facts	TAGS: [ipaserver-master]
-      ipaserver-master : Make sure named-pkcs11 DNS is restarted	TAGS: [ipa-install, ipaserver-master]
       ipaserver-master : wait for services to come up	TAGS: [ipa-install, ipaserver-master]
       ipaserver-master : Set ipv4_dns fact	TAGS: [ipa-install, ipaserver-master]
       ipaserver-master : Use FreeIPA DNS, nmcli conn modify ipv4.dns	TAGS: [ipa-install, ipaserver-master]

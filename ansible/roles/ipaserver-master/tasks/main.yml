@@ -19,29 +19,10 @@
     {{ '--forwarder=%s' % dns_forwarder['nameservers'][0] if enable_network else '--no-forwarders' }}
   when: not ipa.configured.server
 
-- name: Install KRA on FreeIPA master (2-3 minutes)
-  tags:
-    - ipaserver-master
-    - ipa-install
-  command: >
-    ipa-kra-install -U
-    -p {{ ipa_dm_password }}
-  when: not ipa.configured.kra
-
 - name: Update IPA facts
   tags:
     - ipaserver-master
   ipa_facts: domain={{ ipa_domain }}
-
-# XXX workaround for race condition
-# KRA restarts LDAP, which disconnects bind-ldap plugin. The reconnect
-# interval is 60 seconds. A restart make sure named is working properly.
-- name: Make sure named-pkcs11 DNS is restarted
-  tags:
-    - ipaserver-master
-    - ipa-install
-  service: name=named-pkcs11 state=restarted
-  changed_when: false
 
 - name: wait for services to come up
   tags:
