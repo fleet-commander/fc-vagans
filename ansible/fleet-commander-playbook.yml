@@ -92,9 +92,3 @@
     - ipa_sp_example
   roles:
     - ipa-sp-example
-
-- name: Create integration test files
-  hosts:
-    - ipa_tests
-  roles:
-    - ipa-tests

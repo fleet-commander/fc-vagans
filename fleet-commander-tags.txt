@@ -39,6 +39,3 @@ playbook: ansible/fleet-commander-playbook.yml
 
   play #13 (ipa_sp_example): install Ipsilon SP example	TAGS: []
       TASK TAGS: [firewall, ipa-http, ipa-httpd, ipa-install, ipa-sp-example, network, package-install]
-
-  play #14 (ipa_tests): Create integration test files	TAGS: []
-      TASK TAGS: [ipa-tests]
