@@ -21,10 +21,6 @@
         <DT><A HREF="https://{{ hostvars[host].ansible_fqdn }}/idp" LAST_CHARSET="UTF-8">Ipsilon IdP</A>
         <DD>Ipsilon Id}
 {% endfor %}
-{% for host in groups['ipa_sp_example'] | default([]) %}
-        <DT><A HREF="https://{{ hostvars[host].ansible_fqdn }}/sp_example/" LAST_CHARSET="UTF-8">mod_auth_mellon Ipsilon</A>
-        <DD>mod_auth_mellon Ipsilon
-{% endfor %}
 {% for host in groups['ipa_httpexample'] | default([]) %}
         <DT><A HREF="https://{{ hostvars[host].ansible_fqdn }}/example/" LAST_CHARSET="UTF-8">mod_auth_gssapi / mod_lookup_identity</A>
         <DD>mod_auth_gssapi / mod_lookup_identity

@@ -86,9 +86,3 @@
     - ipa_ipsilon_idp
   roles:
     - ipa-ipsilon-idp
-
-- name: install Ipsilon SP example
-  hosts:
-    - ipa_sp_example
-  roles:
-    - ipa-sp-example

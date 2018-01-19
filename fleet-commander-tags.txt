@@ -36,6 +36,3 @@ playbook: ansible/fleet-commander-playbook.yml
 
   play #12 (ipa_ipsilon_idp): install Ipsilon Identity Provider	TAGS: []
       TASK TAGS: [firewall, ipa-http, ipa-httpd, ipa-install, ipa-ipsilon-idp, network, package-install]
-
-  play #13 (ipa_sp_example): install Ipsilon SP example	TAGS: []
-      TASK TAGS: [firewall, ipa-http, ipa-httpd, ipa-install, ipa-sp-example, network, package-install]
