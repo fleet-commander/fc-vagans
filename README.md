@@ -11,7 +11,7 @@ https://github.com/tiran/pki-vagans
 Requirements
 ============
 
-The setup needs about 3 GB of free RAM and 25 GB disk space.
+The setup needs about 3.5 GB of free RAM and 25 GB disk space.
 
 Install dependencies
 --------------------

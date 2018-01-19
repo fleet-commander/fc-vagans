@@ -42,6 +42,9 @@ Vagrant.configure(2) do |config|
     # of Ansible with limit=all and let Ansible take care of parallel
     # execution. It makes the output more readable, too.
     config.vm.define "ipamaster" do |host|
+        host.vm.provider :libvirt do |domain|
+            domain.memory = 2048
+        end
         host.vm.hostname = "master.#{DOMAIN}"
         host.vm.provision "ansible" do |ansible|
             ansible.limit = "all"
