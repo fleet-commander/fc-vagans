@@ -1,2 +1,0 @@
----
-server_cert_name: location='/etc/httpd/alias',nickname='Server-Cert'
