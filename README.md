@@ -53,7 +53,7 @@ Sometimes the initial provision fails to configure the client. A second provisio
 The FleetCommander playbook deploys two machines:
 
   * ipamaster (master.ipa.example)
-  * ipaclient1 (client1.ipa.example)
+  * ipaclient (client.ipa.example)
 
 When the machines are up, you can acquire a Kerberos ticket and start a local
 instance of Firefox to explore the WebUI. The admin password is **Secret123**.
@@ -61,7 +61,7 @@ instance of Firefox to explore the WebUI. The admin password is **Secret123**.
 ```shell
 $ bin/ipa_kinit admin
 $ bin/ipa_firefox
-$ bin/ipa_ssh admin@client1.ipa.example
+$ bin/ipa_ssh admin@client.ipa.example
 ```
 
 Vagrant quick manual
