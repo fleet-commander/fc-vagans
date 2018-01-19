@@ -1,9 +1,10 @@
 import datetime
 import os
 import time
+from ansible.plugins.callback import CallbackBase
 
 
-class CallbackModule(object):
+class CallbackModule(CallbackBase):
     """
     A plugin for timing tasks
     """
