@@ -13,10 +13,6 @@
     <DL><p>
         <DT><A HREF="https://{{ ansible_fqdn }}/" LAST_CHARSET="UTF-8">IPA Master</A>
         <DD>IPA Master
-{% for host in groups['ipaserver_replica'] | default([]) %}
-        <DT><A HREF="https://{{ hostvars[host].ansible_fqdn }}/" LAST_CHARSET="UTF-8">IPA: {{ hostvars[host].ansible_hostname }}</A>
-        <DD>IPA: {{ hostvars[host].ansible_hostname }}
-{% endfor %}
         <DT><A HREF="http://www.freeipa.org/" ADD_DATE="1158286602" LAST_MODIFIED="1176675660" LAST_CHARSET="UTF-8">FreeIPA</A>
         <DD>FreeIPA.
         <HR>

@@ -66,13 +66,6 @@
     - ipa-install
   set_fact: ipv4_dns="{{ hostvars[groups['ipaserver_master'][0]].ansible_default_ipv4.address }}"
 
-- name: Add replica to ipv4_dns fact
-  tags:
-    - ipaserver-master
-    - ipa-install
-  set_fact: ipv4_dns="{{ ipv4_dns }} {{ hostvars[groups['ipaserver_replica'][0]].ansible_default_ipv4.address }}"
-  when: install_ipa_replica
-
 - name: Use FreeIPA DNS, nmcli conn modify ipv4.dns
   tags:
     - ipaserver-master

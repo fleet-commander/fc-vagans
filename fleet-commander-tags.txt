@@ -7,7 +7,7 @@ playbook: ansible/fleet-commander-playbook.yml
   play #2 (all): install IPA base system	TAGS: []
       TASK TAGS: [bootstrap, common, custom-rpms, dummy, firewall, ipa, lxc, network, package-copr, package-install, package-upgrade, pki]
 
-  play #3 (ipaserver_master,ipaserver_replica): install IPA server system	TAGS: []
+  play #3 (ipaserver_master): install IPA server system	TAGS: []
       TASK TAGS: [firewall, ipaserver, network, package-install]
 
   play #4 (ipaserver_master): install FreeIPA server master	TAGS: []
@@ -16,8 +16,5 @@ playbook: ansible/fleet-commander-playbook.yml
   play #5 (ipaserver_master): create local inventory files	TAGS: []
       TASK TAGS: [fetch, ipa-install, ipa-inventory]
 
-  play #6 (ipaserver_replica): install FreeIPA server replica	TAGS: []
-      TASK TAGS: [fetch, ipa-client, ipa-install, ipaserver-replica]
-
-  play #7 (ipa_client): install FreeIPA client	TAGS: []
+  play #6 (ipa_client): install FreeIPA client	TAGS: []
       TASK TAGS: [ipa-client, ipa-install]

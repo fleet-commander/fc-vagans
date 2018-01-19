@@ -61,7 +61,7 @@ playbook: ansible/fleet-commander-playbook.yml
       ipa : Disable mod_ssl configuration	TAGS: [ipa]
       ipa : Gather IPA facts	TAGS: [ipa]
 
-  play #3 (ipaserver_master,ipaserver_replica): install IPA server system	TAGS: []
+  play #3 (ipaserver_master): install IPA server system	TAGS: []
     tasks:
       ipaserver : install FreeIPA server package (Fedora)	TAGS: [ipaserver, network, package-install]
       ipaserver : install FreeIPA server package (RHEL / CentOS)	TAGS: [ipaserver, network, package-install]
@@ -75,7 +75,6 @@ playbook: ansible/fleet-commander-playbook.yml
       ipaserver-master : Make sure named-pkcs11 DNS is restarted	TAGS: [ipa-install, ipaserver-master]
       ipaserver-master : wait for services to come up	TAGS: [ipa-install, ipaserver-master]
       ipaserver-master : Set ipv4_dns fact	TAGS: [ipa-install, ipaserver-master]
-      ipaserver-master : Add replica to ipv4_dns fact	TAGS: [ipa-install, ipaserver-master]
       ipaserver-master : Use FreeIPA DNS, nmcli conn modify ipv4.dns	TAGS: [ipa-install, ipaserver-master]
       ipaserver-master : Use FreeIPA DNS, nmcli conn modify ipv4.dns-search	TAGS: [ipa-install, ipaserver-master]
       ipaserver-master : Use FreeIPA DNS, nmcli conn modify ipv4.ignore-auto-dns	TAGS: [ipa-install, ipaserver-master]
@@ -109,22 +108,7 @@ playbook: ansible/fleet-commander-playbook.yml
       ipa-inventory : Remove old CA.crt from NSSDB	TAGS: [ipa-install, ipa-inventory]
       ipa-inventory : Populate NSSDB with CA.crt	TAGS: [ipa-install, ipa-inventory]
 
-  play #6 (ipaserver_replica): install FreeIPA server replica	TAGS: []
-    tasks:
-      ipaserver-replica : join FreeIPA	TAGS: [ipa-client, ipa-install]
-      ipaserver-replica : Update IPA facts	TAGS: [ipa-client]
-      ipaserver-replica : install replica	TAGS: [ipa-install, ipaserver-replica]
-      ipaserver-replica : Prepare replication	TAGS: [ipa-install, ipaserver-replica]
-      ipaserver-replica : Fetch replication file	TAGS: [fetch, ipa-install, ipaserver-replica]
-      ipaserver-replica : Copy replication file	TAGS: [ipa-install, ipaserver-replica]
-      ipaserver-replica : install replica	TAGS: [ipa-install, ipaserver-replica]
-      ipaserver-replica : Update IPA facts	TAGS: [ipaserver-replica]
-      ipaserver-replica : Install CA on FreeIPA replica (3-4 minutes)	TAGS: [ipa-install, ipaserver-replica]
-      ipaserver-replica : Install KRA on FreeIPA replica (2-3 minutes)	TAGS: [ipa-install, ipaserver-replica]
-      ipaserver-replica : Make sure named-pkcs11 DNS is restarted	TAGS: [ipa-install, ipaserver-replica]
-      ipaserver-replica : Update IPA facts	TAGS: [ipaserver-replica]
-
-  play #7 (ipa_client): install FreeIPA client	TAGS: []
+  play #6 (ipa_client): install FreeIPA client	TAGS: []
     tasks:
       ipa-client : join FreeIPA	TAGS: [ipa-client, ipa-install]
       ipa-client : Update IPA facts	TAGS: [ipa-client]

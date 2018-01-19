@@ -21,7 +21,6 @@
   any_errors_fatal: true
   hosts:
     - ipaserver_master
-    - ipaserver_replica
   roles:
     - ipaserver
 
@@ -36,12 +35,6 @@
     - ipaserver_master
   roles:
     - ipa-inventory
-
-- name: install FreeIPA server replica
-  hosts:
-    - ipaserver_replica
-  roles:
-    - ipaserver-replica
 
 - name: install FreeIPA client
   any_errors_fatal: true

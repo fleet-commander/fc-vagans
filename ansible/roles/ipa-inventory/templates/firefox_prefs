@@ -2,9 +2,6 @@ user_pref("browser.startup.homepage", "https://{{ ansible_fqdn }}");
 
 pref("browser.newtabpage.pinned", '[
 {"url":"https://{{ ansible_fqdn }}/","title":"IPA: Master"},
-{% for host in groups['ipaserver_replica'] | default([]) %}
-{"url":"https://{{ hostvars[host].ansible_fqdn }}/","title":"IPA: {{ hostvars[host].ansible_hostname }}"},
-{% endfor %}
 {"url":"http://www.freeipa.org","title":"FreeIPA"}
 ]');
 user_pref("browser.newtabpage.enhanced", true);
