@@ -1,5 +1,5 @@
 ---
-- include: extravars.yml
+- import_tasks: extravars.yml
 
 # - debug: var=hostvars[inventory_hostname] verbosity=4
 # - debug: var=groups verbosity=4
@@ -30,10 +30,10 @@
   when: "'Time zone: UTC' not in timedatectl.stdout"
 
 # package manager
-- include: dnf.yml
+- import_tasks: dnf.yml
   when: dnf_package
 
-- include: yum.yml
+- import_tasks: yum.yml
   when: not dnf_package
 
   # copr
