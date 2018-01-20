@@ -28,7 +28,7 @@ BASE_PACKAGES = [
 # On Fedora the canonical package names start with freeipa but have an
 # alternative name, too.
 IPA_PACKAGES = [
-    'ipa-client', 'ipa-server'
+    'ipa-client', 'ipa-server', 'ipa-server-dns'
 ]
 
 IPA_PLUGIN_PACKAGES = [
