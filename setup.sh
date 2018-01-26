@@ -24,3 +24,7 @@ echo "The FreeIPA web UI is: https://master.ipa.example/"
 echo
 echo "The Cockpit/Fleet Commander admin password is 'Secret123'"
 echo "The cockpit URL is: https://master.ipa.example:9090/"
+echo
+echo "In case you need to ssh to the machines, simply do:"
+echo "`vagrant ssh ipaclient`, to connect to the client machine"
+echo "`vagrant ssh ipamaster`, to connect to the master machine"
