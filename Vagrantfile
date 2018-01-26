@@ -6,7 +6,7 @@ Vagrant.require_version ">= 1.6.0"
 DOMAIN="ipa.example"
 
 HERE = File.dirname(__FILE__)
-ENV['ANSIBLE_CONFIG'] = "#{HERE}/../ansible/ansible.cfg"
+ENV['ANSIBLE_CONFIG'] = "#{HERE}/ansible/ansible.cfg"
 
 # Workaround for ssh problem with ED25519 curve
 # SSH not up: #<Vagrant::Errors::NetSSHException: An error occurred in the underlying SSH library that Vagrant uses.
@@ -48,7 +48,7 @@ Vagrant.configure(2) do |config|
         host.vm.hostname = "master.#{DOMAIN}"
         host.vm.provision "ansible" do |ansible|
             ansible.limit = "all"
-            ansible.playbook = "../ansible/fleet-commander-playbook.yml"
+            ansible.playbook = "ansible/fleet-commander-playbook.yml"
             ansible.groups = {
                 "ipaserver_master" => ["ipamaster"],
                 "ipa_client" => ["ipaclient"],
