@@ -97,6 +97,13 @@ FLAVORS = {
         '--run-command', 'systemctl enable cockpit.socket',
         '--run-command', 'systemctl set-default graphical.target',
         '--firstboot', 'scripts/ipa-firstboot',
+
+        # This is a workaround used while PRs #495 and #497 for SSSD
+        # are not closed and merged to Fedora
+        # PR #495: https://github.com/SSSD/sssd/pull/495
+        # PR #497: https://github.com/SSSD/sssd/pull/497
+        '--run-command', COPR_ENABLE.format('fidencio/fleet-commander'),
+        '--install', 'sssd',
     ],
 }
 
