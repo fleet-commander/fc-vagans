@@ -16,7 +16,7 @@ if ENV.has_key?('SSH_AUTH_SOCK')
 end
 
 Vagrant.configure(2) do |config|
-    config.vm.box = "fidencio/fleet-commander-f27"
+    config.vm.box = "fleet-commander/f27"
     # no rsync, Ansible playbook syncs files manually
     config.vm.synced_folder ".", "/vagrant", disabled: true
 
